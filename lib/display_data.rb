@@ -25,11 +25,11 @@ class DisplayData
         database[:advocates].each do |advocate|
           if advocate[:practising_states].include?(prac_state)
             swc = advocate[:cases][:practising].select{ |c| c[:practising_state] == prac_state } + advocate[:cases][:rejected].select{ |c| c[:practising_state] == prac_state }
-            puts "#{advocate[:id]} - #{swc.map{ |c| c[:id] }.join(', ')}"
+            puts "#{advocate[:id]} - #{swc.any? ? swc.map{ |c| c[:id] }.join(', ') : 'NIL'}"
             advocate[:juniors].each do |jun_adv|
               if jun_adv[:practising_states].include?(prac_state)
                 swc = jun_adv[:cases].select{ |c| c[:practising_state] == prac_state }
-                puts "#{jun_adv[:id]} - #{swc.map{ |c| c[:id] }.join(', ')}"
+                puts "#{jun_adv[:id]} - #{swc.any? ? swc.map{ |c| c[:id] }.join(', ') : 'NIL'}"
               end
             end
           end
